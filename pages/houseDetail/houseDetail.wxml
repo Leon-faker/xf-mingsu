@@ -27,7 +27,7 @@
       <view class='info-title-service' hidden='{{level=="" && detailList.is_spacil.length==0}}' data-isShow="isShow2" bindtap='togglePopup'>
         <text hidden='{{level==""}}' class='text2 font-middle'>\n{{level}}</text><text hidden='{{level==""}}' class='info-title-service-point font-small'>·</text>
         <block wx:for="{{detailList.is_spacil}}" wx:key>
-          <text class='service font-small' style='color: {{item=="优选"?"#ff6b08":""}}'>{{item}}</text><text wx:if="{{index+1 != detailList.is_spacil.length}}" class='info-title-service-point font-small'>·</text><view wx:else></view>
+          <text class='service font-small' style='color: #ff6b08'>2000</text><text wx:if="{{index+1 != detailList.is_spacil.length}}" class='info-title-service-point font-small'>·</text><view wx:else></view>
         </block>
       </view>
     </view>
@@ -62,7 +62,7 @@
           <text class='font-big'>{{detailList.unitAddress}}</text>
           <view class='info-comment-tx-label color-153 font-small'>
             <block wx:for="{{detailList.merchant}}" wx:for-item="info_item" wx:for-index="idx" wx:key>
-              {{info_item}}<text hidden='{{idx+1 == detailList.merchant.length}}'> · </text> 
+              {{info_item.info_item}}<text hidden='{{idx+1 == detailList.merchant.length}}'> · </text> 
             </block>
           </view>
         </view>
@@ -109,12 +109,12 @@
           <view class='info-comment-custom-tx'>
             <image src='{{detailList.comment.commentlist[0].face}}'></image>
             <view class='info-comment-custom-tx-view font-small'>
-              <text>{{detailList.comment.commentlist[0].name}}\n</text>
-              <text>{{detailList.comment.commentlist[0].add_time}} 点评</text>      
+              <text>李涛{{detailList.comment.commentlist[0].name}}\n</text>
+              <text>2019-04-15{{detailList.comment.commentlist[0].add_time}} 点评</text>      
             </view>
           </view>
           <view class='info-comment-custom-comment font-middle'>
-            <text>\n{{detailList.comment.commentlist[0].content}}</text>
+            <text>\n住宿环境都还不错，服务也很周到!{{detailList.comment.commentlist[0].content}}</text>
           </view>
           <view class='info-comment-custom-img'>
             <block wx:for="{{detailList.comment.commentlist[0].imgUrls}}" wx:key>

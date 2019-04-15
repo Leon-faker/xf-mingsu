@@ -24,7 +24,48 @@ Page({
         {
           "path": "/img/index/home3.jpg"
         }
-      ]
+      ],
+      "introduction":{
+        "minsu_name": "葙风民宿·且慢客栈，Loft葙风民宿·且慢客栈"
+      },
+      "is_spacil":[],
+      "activityType": 2,
+      "decount_list":[
+        {
+          "day": "3",
+          "discount": "8"
+        },
+        {
+          "day": "5",
+          "discount": "7.5"
+        }
+        
+      ],
+      "bedroomCount":3,
+      "livingroomCount": 2,
+      "bathroomCount": 2,
+      "recommendedGuests": 3,
+      "bedTypeList": ["一个单人床","一个双人床"],
+      "logoPicURL": '/img/index/home1.jpg',
+      "unitAddress": "上海市闵行区",
+      "merchant": [
+        {
+          "info_item":"住宿环境都还不错，服务也很周到"
+        },
+        {
+          "info_item": "住宿环境都还不错，服务也很周到"
+        },
+        {
+          "info_item": "住宿环境都还不错，服务也很周到"
+        },
+        {
+          "info_item": "住宿环境都还不错，服务也很周到"
+        }
+      ],
+      "comment": {
+        "score":2,
+        "desc": "葙风民宿"
+      }
     },
     zhoubianList: [],
     date: [],
@@ -255,6 +296,7 @@ Page({
   },
   //popup显示隐藏切换（特殊服务和押金）
   togglePopup(e){
+    console.log("事件");
     var that = this;
     var isShow = e.currentTarget.dataset.isshow;
     if(isShow == "isShow2"){

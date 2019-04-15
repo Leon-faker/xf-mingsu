@@ -71,7 +71,8 @@ Page({
       {
         "room_id": 2,
         "room_img": "/img/index/home3.jpg",
-        "activityType": 2
+        "activityType": 2,
+        "kitchenCount": 1
       }
     ],
     
