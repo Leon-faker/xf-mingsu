@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "葙风精品民宿",
+  "usingComponents": {
+    "zan-row": "/components/dist/row/index",
+    "zan-col": "/components/dist/col/index"
+  }
+}
