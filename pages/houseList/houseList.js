@@ -53,9 +53,9 @@ Page({
     ],
     filter_num: 0,
     levelList: [
-      { id: 1, title: '豪华', url: 'icon-weizhi' },
-      { id: 2, title: '精品', url: 'icon-weizhi1'},
-      { id: 3, title: '舒适', url: 'icon-weizhi2'},
+      { id: 1, title: '豪华', url: 'icon-jingpin1' },
+      { id: 2, title: '精品', url: 'icon-jingpin'},
+      { id: 3, title: '舒适', url: 'icon-zuowu-xiaomai'},
     ],
     houseList: [
       {

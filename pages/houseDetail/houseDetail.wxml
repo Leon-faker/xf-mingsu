@@ -27,7 +27,7 @@
       <view class='info-title-service' hidden='{{level=="" && detailList.is_spacil.length==0}}' data-isShow="isShow2" bindtap='togglePopup'>
         <text hidden='{{level==""}}' class='text2 font-middle'>\n{{level}}</text><text hidden='{{level==""}}' class='info-title-service-point font-small'>·</text>
         <block wx:for="{{detailList.is_spacil}}" wx:key>
-          <text class='service font-small' style='color: #ff6b08'>2000</text><text wx:if="{{index+1 != detailList.is_spacil.length}}" class='info-title-service-point font-small'>·</text><view wx:else></view>
+          <text class='service font-small' style='color: #ff6b08'>{{ item }}</text><text wx:if="{{index+1 != detailList.is_spacil.length}}" class='info-title-service-point font-small'>·</text><view wx:else></view>
         </block>
       </view>
     </view>
@@ -72,7 +72,7 @@
         <view class='info-comment-custom-level font-middle'>
           <zan-row>
             <zan-col col="5" col-class="custom-zan-col"><text class='big'>{{detailList.comment.score}}</text></zan-col>
-            <zan-col col="8" col-class="custom-zan-col">
+            <zan-col col="6" col-class="custom-zan-col">
               <view class='info-comment-custom-level-star'>
                 <view class='star'>
                   <block>
@@ -86,7 +86,7 @@
                 <view>{{detailList.comment.desc}}</view>
               </view>
             </zan-col>
-            <zan-col col="8" col-class="custom-zan-col">
+            <zan-col col="10" col-class="custom-zan-col">
               <block wx:if="{{detailList.comment.total!=0}}">
                 <view class='info-comment-custom-level-img'>
                   <block wx:for="{{detailList.comment.commentlist}}" wx:key>
@@ -109,8 +109,8 @@
           <view class='info-comment-custom-tx'>
             <image src='{{detailList.comment.commentlist[0].face}}'></image>
             <view class='info-comment-custom-tx-view font-small'>
-              <text>李涛{{detailList.comment.commentlist[0].name}}\n</text>
-              <text>2019-04-15{{detailList.comment.commentlist[0].add_time}} 点评</text>      
+              <text>{{detailList.comment.commentlist[0].name}}\n</text>
+              <text>{{detailList.comment.commentlist[0].add_time}} 点评</text>      
             </view>
           </view>
           <view class='info-comment-custom-comment font-middle'>
@@ -146,7 +146,7 @@
       </view>
       <view class='houseDesc {{isView2?"zan-ellipsis--l3":""}} font-middle'>
         房屋描述
-        <view><text class='font-middle color-102'>{{detailList.introduction.room_special}}</text></view>
+        <view><text class='font-middle color-102'>{{detailList.introduction.room_describe}}</text></view>
       </view>
       <view class='houseAround {{isView2?"zan-ellipsis--l3":""}} font-middle'>
         周边介绍
@@ -163,14 +163,20 @@
           {{item.title}}
           <view class='items font-small color-85'>
             <block wx:for="{{item.child}}" wx:for-item="item2" wx:key>
-              <view><text style='color: {{item2.isHave==0?"rgb(222,222,222)":"rgb(85,85,85)"}}' class='info-service-icon daoke-icon {{item2.icon}}'></text><text class='{{item2.isHave==0?"zan-text-deleted zan-c-gray":""}}'>\n{{item2.title}}</text></view>
+              <view>
+                <text style='color: {{item2.isHave==0?"rgb(222,222,222)":"rgb(85,85,85)"}}' class='info-service-icon daoke-icon {{item2.icon}}'></text>
+                <text class='{{item2.isHave==0?"zan-text-deleted zan-c-gray":""}}'>\n{{item2.title}}</text>
+              </view>
             </block>
           </view>
         </view>
       </block>
       <view class='items font-small' style='height: 275rpx;overflow:hidden' hidden='{{!isView4}}'>
         <block wx:for="{{detailList.facilities[0].child}}" wx:for-item="ite" wx:key>
-          <view><text style='color: {{ite.isHave==0?"rgb(222,222,222)":"rgb(85,85,85)"}}' class='info-service-icon daoke-icon {{ite.icon}}'></text><text class='{{ite.isHave==0?"zan-text-deleted zan-c-gray":""}}'>\n{{ite.title}}</text></view>
+          <view>
+            <text style='color: {{ite.isHave==0?"rgb(222,222,222)":"rgb(85,85,85)"}}' class='info-service-icon daoke-icon {{ite.icon}}'>
+            </text><text class='{{ite.isHave==0?"zan-text-deleted zan-c-gray":""}}'>\n{{ite.title}}</text>
+          </view>
         </block>
       </view>
     </view>
@@ -252,12 +258,12 @@
           </view>
         </block>
       </view>
-      <view class='shuoming'>卫生打扫: <text class='shuoming-text1'>{{detailList.info.washType.wash}}</text></view>
-      <view class='shuoming'>被单更换: <text class='shuoming-text1'>{{detailList.info.washType.clear}}</text></view>
-      <view class='shuoming'>入住退房: <text class='shuoming-text1'>入住时间{{detailList.info.accomTime}}后 | 退房时间{{detailList.info.outTime}}前</text></view>
-      <view class='shuoming'>接待时间: <text class='shuoming-text1'>{{detailList.info.recepTime.start}}~{{detailList.info.recepTime.end}}</text></view>
-      <view class='shuoming'>自助入住: <text class='shuoming-text1'>{{detailList.auto}}</text></view>
-      <view class='shuoming'>提供发票: <text class='shuoming-text1 orange' bindtap='toFaPiao' data-val="{{detailList.InvoiceUrl}}">{{detailList.Invoice}}</text></view>
+      <view class='shuoming'>卫生打扫: <text class='shuoming-text1'>一客一清洁{{detailList.info.washType.wash}}</text></view>
+      <view class='shuoming'>被单更换: <text class='shuoming-text1'>一客一换{{detailList.info.washType.clear}}</text></view>
+      <view class='shuoming'>入住退房: <text class='shuoming-text1'>入住时间14:00{{detailList.info.accomTime}}后 | 退房时间12:00{{detailList.info.outTime}}前</text></view>
+      <view class='shuoming'>接待时间: <text class='shuoming-text1'>00:00{{detailList.info.recepTime.start}}~24:00{{detailList.info.recepTime.end}}</text></view>
+      <view class='shuoming'>自助入住: <text class='shuoming-text1'>接待入住{{detailList.auto}}</text></view>
+      <view class='shuoming'>提供发票: <text class='shuoming-text1 orange' bindtap='toFaPiao' data-val="{{detailList.InvoiceUrl}}">提供{{detailList.Invoice}}</text></view>
     </view>
     <view class='cost-extend'>
       <view class='cost-extend-head font-big'>额外费用<text class='font-small color-102'>额外费用不包括再总房费内，由房东线下收取</text></view>
@@ -287,7 +293,7 @@
     <view class='baozhang'>
       <view class='baozhang-head'>
         <view class='baozhang-head-text font-small'>1000万保障基金 | 到点无房额外赔偿</view>
-        <view class='baozhang-head-img font-large'><view><text class='bz-icon daoke-icon icon-bz'></text></view>有稻客 安心租</view>
+        <view class='baozhang-head-img font-large'><view><text class='bz-icon daoke-icon icon-bz'></text></view> 葙风精品民宿</view>
       </view>
       <view class='bianhao'>
         <view>——</view>

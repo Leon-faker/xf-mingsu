@@ -1,15 +1,16 @@
 // pages/detail/detail.js
 var utils = require('../../utils/util.js');
 var wxb = require('../../utils/wxb.js')  //API接口请求核心文件
-var current_m = new Date().getMonth()+1;
+var current_m = new Date().getMonth() + 1;
 var alreadydate = [];      //已预订日期数据
 const Toast = require('../../components/dist/toast/toast');
 
 Page({
   data: {
+    index: 1,
     isView1: true,       //收起展开控制
     isView2: true,
-    isView3:true,
+    isView3: true,
     isView4: true,
     isShow: false,       //押金popup显示控制
     isShow2: false,
@@ -25,12 +26,15 @@ Page({
           "path": "/img/index/home3.jpg"
         }
       ],
-      "introduction":{
-        "minsu_name": "葙风民宿·且慢客栈，Loft葙风民宿·且慢客栈"
+      "introduction": {
+        "minsu_name": "葙风民宿·且慢客栈，Loft葙风民宿·且慢客栈",
+        "room_add":"恩施市",
+        "room_describe": "有空调／热水器／餐桌齐全（为房东配备）、电视、小部分家具、沙发（可共用）部分厨具（锅碗瓢盆）为我自备，但欢迎共用。要出租的房间有：大床和床垫、衣柜、电脑桌，方便带衣即可入住，光线好，很温馨。",
+        "room_intduce": "有空调／热水器／餐桌齐全（为房东配备）、电视、小部分家具、沙发（可共用）部分厨具（锅碗瓢盆）为我自备，但欢迎共用。要出租的房间有：大床和床垫、衣柜、电脑桌，方便带衣即可入住，光线好，很温馨。"
       },
-      "is_spacil":[],
+      "is_spacil": ["环境优美","交通便利","依山傍水"],
       "activityType": 2,
-      "decount_list":[
+      "decount_list": [
         {
           "day": "3",
           "discount": "8"
@@ -39,18 +43,84 @@ Page({
           "day": "5",
           "discount": "7.5"
         }
-        
+
       ],
-      "bedroomCount":3,
+      //交易规则
+      "refundsRule": [
+        {
+          "statusTexe":"在线预订",
+          "desc":"描述"
+        },
+        {
+          "statusTexe": "房客接待",
+          "desc": "描述"
+        }
+      ],
+      //付款方式
+      "payType":"微信支付",
+      //需要确认
+      "isComfirm": "需要确认",
+      "is_deposit": 1,
+      "depositMoney": 200,
+      //设施服务
+      "facilities": [
+        {
+          "child": [
+            {
+              "title": "无线网络",
+              "isHave": 1
+            },
+            {
+              "title": "电视",
+              "isHave": 1
+            },
+            {
+              "title": "电吹风",
+              "isHave": 1
+            },
+            {
+              "title": "晾衣架",
+              "isHave": 0
+            },
+            {
+              "title": "洗衣机",
+              "isHave": 0
+            }
+            ,
+            {
+              "title": "电视",
+              "isHave": 0
+            },
+            {
+              "title": "电吹风",
+              "isHave": 0
+            },
+            {
+              "title": "晾衣架",
+              "isHave": 0
+            },
+            {
+              "title": "洗衣机",
+              "isHave": 0
+            }
+          ]
+        }
+      ],
+      "room_detail": [
+        {
+          "tags":["交通便利","环境优美"]
+        }
+      ],
+      "bedroomCount": 3,
       "livingroomCount": 2,
       "bathroomCount": 2,
       "recommendedGuests": 3,
-      "bedTypeList": ["一个单人床","一个双人床"],
+      "bedTypeList": ["一个单人床", "一个双人床"],
       "logoPicURL": '/img/index/home1.jpg',
       "unitAddress": "上海市闵行区",
       "merchant": [
         {
-          "info_item":"住宿环境都还不错，服务也很周到"
+          "info_item": "住宿环境都还不错，服务也很周到"
         },
         {
           "info_item": "住宿环境都还不错，服务也很周到"
@@ -63,15 +133,37 @@ Page({
         }
       ],
       "comment": {
-        "score":2,
-        "desc": "葙风民宿"
-      }
+        "score": 1,
+        "desc": "葙风民宿",
+        "total": 300,
+        "commentlist":[
+          {
+            "face": "/img/index/home2.jpg",
+            "name":"匿名用户",
+            "add_time": "2019-04-16"
+          },
+          {
+            "face": "/img/index/home2.jpg",
+            "name": "匿名用户",
+            "add_time": "2019-04-16"
+          },
+          {
+            "face": "/img/index/home2.jpg",
+            "name": "匿名用户",
+            "add_time": "2019-04-16"
+          }
+        ]
+      },
+      "lng": 116.414042,
+      "lat": 39.896781,
+      "bdLng": 116.414042,
+      "bdLat": 39.896781
     },
     zhoubianList: [],
     date: [],
     starttime: '',
     endtime: '',
-    level: '',
+    level: "",
     current: 0,
     popupList: [
       {
@@ -114,7 +206,7 @@ Page({
     price: '',
     days: 1
   },
-  onLoad: function(options){
+  onLoad: function (options) {
     var that = this;
     var room_id = options.room_id;
     var list;
@@ -209,7 +301,7 @@ Page({
       level: level
     });
   },
-  onShareAppMessage: function(res){
+  onShareAppMessage: function (res) {
     var that = this;
     if (res.from === 'button') {
       // 来自页面内转发按钮
@@ -220,7 +312,7 @@ Page({
       path: '/pages/houseDetail/houseDetail?room_id=' + that.data.detailList.room_id
     }
   },
-  onShow: function(){
+  onShow: function () {
     var that = this
     //获取缓存中的入住时间和离店时间
     var start_m = 0;
@@ -288,18 +380,18 @@ Page({
     });
   },
   //展开收起切换（view）
-  viewChange(e){
+  viewChange(e) {
     var isView = e.currentTarget.dataset.value;
     this.setData({
       [isView]: !this.data[isView]
     });
   },
   //popup显示隐藏切换（特殊服务和押金）
-  togglePopup(e){
+  togglePopup(e) {
     console.log("事件");
     var that = this;
     var isShow = e.currentTarget.dataset.isshow;
-    if(isShow == "isShow2"){
+    if (isShow == "isShow2") {
       var list = that.data.detailList.service
       var popupList = that.data.popupList
       for (let i = 0; i < popupList.length; i++) {
@@ -316,32 +408,32 @@ Page({
     });
   },
   //打开地图显示位置信息
-  navigatorToLocation(e){
+  navigatorToLocation(e) {
     var that = this;
     console.log('lat', parseFloat(e.currentTarget.dataset.lat), '2', e.currentTarget.dataset.lat);
     wx.openLocation({
       latitude: parseFloat(e.currentTarget.dataset.lat),
       longitude: parseFloat(e.currentTarget.dataset.lng),
-      name: that.data.detailList.introduction.minsu_name, 
+      name: that.data.detailList.introduction.minsu_name,
       address: that.data.detailList.unitAddress,
       scale: 18
     });
   },
   //跳转到评论信息
-  navigatorToDianPing(){
+  navigatorToDianPing() {
     wx.navigateTo({
       url: 'dianPing/dianPing?id=' + this.data.detailList.room_id,
     });
   },
   //跳转到照片详情
-  navigatorToPhoto(e){
+  navigatorToPhoto(e) {
     var imgUrlsList = JSON.stringify(e.currentTarget.dataset.value)
     wx.navigateTo({
       url: 'photo/photo?imgUrlsList=' + imgUrlsList,
     })
   },
   //跳转到日期选择页面
-  navigatorToCalendar(){
+  navigatorToCalendar() {
     var bg_date = this.data.starttime.slice(4)
     var end_date = this.data.endtime.slice(4)
     wx.navigateTo({
@@ -349,7 +441,7 @@ Page({
     })
   },
   //跳转到填写订单信息页面
-  navigatorToCommitOrder(){
+  navigatorToCommitOrder() {
     var that = this;
     var price = that.data.detailList.decount_list != '' && that.data.days >= that.data.detailList.decount_list[0].day ? parseInt(that.data.price).toFixed(2) * that.data.detailList.decount_list[0].discount * 0.1 : that.data.price;
     if (!wxb.checkAuthLogin()) {
@@ -359,11 +451,11 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: 'commitOrder/commitOrder?room_id=' + that.data.detailList.room_id + '&price=' + price ,
+      url: 'commitOrder/commitOrder?room_id=' + that.data.detailList.room_id + '&price=' + price,
     });
   },
   // 跳转到发票
-  toFaPiao: function(e){
+  toFaPiao: function (e) {
     console.log(e.currentTarget.dataset.val);
     wx.navigateTo({
       url: 'faPiao/faPiao?url=' + e.currentTarget.dataset.val,

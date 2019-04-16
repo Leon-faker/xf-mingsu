@@ -77,7 +77,7 @@
           <view class='search-detail-desc-title'>
             <!-- 房屋级别标记 -->
             <view class='search-detail-desc-title-level' wx:if="{{item.houseLevel}}">
-              <text wx:if="true{{item.houseLevel!=0}}" class='iconfont {{levelList[item.houseLevel].url}}'></text>
+              <text wx:if="true{{item.houseLevel!=0}}" class='daoke-icon {{levelList[item.houseLevel].url}}'></text>
               <text class='font-small'>{{levelList[0].title}}</text>          
             </view>
             <view style='' class='omit font-large'>{{item.introduction.minsu_name}}</view>
