@@ -214,10 +214,12 @@ function Post(api, params, callback,types = "POST") {
 }
 
 function PostMain(api, params, callback, types) {
+  console.log(api);
   var apiurl = module.exports.globalData.apiurl + api + '?appid=' + module.exports.globalData.appid
     + '&appkey=' + module.exports.globalData.appkey;
   wx.request({
-    url: apiurl,
+    url: getApp().globalData.serverPath + api,
+    header: getApp().globalData.header,
     data: params,
     method: types,
     dataType: 'json',
@@ -360,7 +362,14 @@ module.exports = {
   setCity: setCity,
   getCityList: getCityList,
   getCity: getCity,
-  getBgEndDate: getBgEndDate,
+
+  getStoreCode: getStoreCode,
+  setStoreCode: setStoreCode,
+  fileupload: fileupload,
+  Post: Post,
+  globalData: [],
+  that: null,
+
   getStoreCode: getStoreCode,
   setStoreCode: setStoreCode,
   fileupload: fileupload,

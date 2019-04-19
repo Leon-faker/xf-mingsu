@@ -13,20 +13,25 @@ Page({
     codeNum: '',  //数字验证码
     tabId: 0,
     disabled: false,
-    imgUrl: '',
+    imgUrl: 'data:image/png;base64,',
     sjn: 1100,
     isFinished: false
   }, 
   onLoad: function (options) {
-    var that = this;
-    wx.getExtConfig({
-      success: function (res) {
-        res.extConfig;
-        that.setData({
-          imgUrl: res.extConfig.apiurl + wxb.api.captcha + '?appid=' + res.extConfig.appid + '&appkey=' + res.extConfig.appkey
-        });
-      }
-    });
+    // wxb.Post('http://localhost:9000/user/getCaptcha', {
+    //   tokenId: that.data.sjn
+    // }, function (data) {
+    //   console.log(data);
+    // }); 
+    // wx.getExtConfig({
+    //   success: function (res) {
+    //     console.log(res)
+    //     res.extConfig;
+    //     that.setData({
+    //       imgUrl: res.extConfig.apiurl + wxb.api.captcha + '?appid=' + res.extConfig.appid + '&appkey=' + res.extConfig.appkey
+    //     });
+    //   }
+    // });
   },
   //刷新图形验证码
   getImg: function () {
@@ -54,9 +59,8 @@ Page({
       });
     }
     else{
-      wxb.Post(wxb.api.getSMS, {
-        phone: that.data.userPhone,
-        code: that.data.valatedCode
+      wxb.Post(wxb.api.getSmsCaptcha, {
+        phone: that.data.userPhone
       }, function(data){
         console.log(data);
         that.setData({
@@ -134,6 +138,26 @@ Page({
   //提交数据登录
   login: function(){
     var that = this;
+    wxb.Post(wxb.api.login, {
+      phone: that.data.userPhone,
+      captchaCode: that.data.valatedCode,
+      smsCode: that.data.codeNum
+    }, function (data) {
+      console.log(data);
+    });  
+    // wx.request({
+    //   url: 'http://localhost:9000/user/login',
+    //   method: 'post',
+    //   data: {
+    //     phone: that.data.userPhone,
+    //     captchaCode: that.data.valatedCode,
+    //     smsCode: that.data.codeNum
+    //   },
+    //   success(res){
+    //     console.log(res);
+    //   }
+    // })
+
     if(that.data.valatedCode != that.data.codeImg.value){
       Toast({
         message: '图片验证码输入错误',
@@ -143,7 +167,7 @@ Page({
     else{
       wxb.Post(wxb.api.login, function(data){
         if(data){
-
+          
         }
       });
       // console.log({
@@ -205,14 +229,11 @@ Page({
       success: function (res) {
         console.log("code" + res.code)
         if (res.code) {
-          //发起网络请求
-          wx.request({
-            url: 'http://localhost:9000/login/wxAuthLogin',
-            method: 'post',
-            data: {
-              jsCode: res.code
-            }
-          })
+          wxb.Post(wxb.api.wxAuth, {
+            jsCode: res.code
+          }, function (data) {
+            console.log(data);
+          }); 
         } else {
           console.log('登录失败！' + res.errMsg)
         }
@@ -226,7 +247,13 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           wx.getUserInfo({
             success: function (res) {
-              console.log(res.userInfo)
+              console.log(res)
+              wxb.Post(wxb.api.resolveEncryptedData,{
+                ecncryptedData: res.encryptedData,
+                ivb64: res.iv
+              },function(res){
+                console.log(res);
+              })
               wx.navigateBack();
             }
           })

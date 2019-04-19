@@ -1,3 +1,4 @@
+
 var apis = {
   index_banner: '/api/minsu.data/getBanner',    //首页背景图
   minsu_index: '/api/minsu.index/index',    //房间列表
@@ -20,6 +21,14 @@ var apis = {
   delImage: '/api/upload/delImage',    //删除上传图片
   comment: '/api/minsu.order/comment',    //提交评论
   getComment: '/api/minsu.index/getComment',   //获取评论信息
+
+
+  //新接口
+  getCaptcha: '/user/getCaptcha',  //获取图片验证码
+  getSmsCaptcha: '/user/sms', // 获取短信验证码
+  login: '/user/login', // 用户登录
+  wxAuth: "/wechat/wxAuthLogin",//微信授权登录
+  resolveEncryptedData: '/wechat/resolveEncryptedData',//解密openid
 }
 
 module.exports = apis;

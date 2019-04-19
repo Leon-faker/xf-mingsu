@@ -33,7 +33,7 @@ Page({
     current: 0,
     recommendList: []
   },
-  
+
   onLoad: function (options) {
     var that = this;
     //请求一张首页的背景图片
@@ -72,11 +72,11 @@ Page({
     }
     that.getPlace();
     wxb.getCityList(function (data) {
-      if(data != '')
+      if (data != '')
         wxb.dingWei(data, function (data2) {
           that.setData({
             cityInfo: data2
-          });       
+          });
           wxb.setCity(data2.city_id, data2.city_name, data2.city_lat, data2.city_lng);
         });
     })
@@ -112,7 +112,7 @@ Page({
     wx.removeStorageSync("filter_num");
   },
   //点击查找房屋进行跳转
-  search(){
+  search() {
     var that = this;
     var list = {};
     //添加入住与离店时间
@@ -121,21 +121,21 @@ Page({
       list['bg_date'] = dateList.bg_date;
       list['end_date'] = dateList.end_date;
     }
-    else{
-      var endtime = utils.getDateStr(starttime,1);
+    else {
+      var endtime = utils.getDateStr(starttime, 1);
       list['bg_date'] = starttime;
       list['end_date'] = endtime;
     }
     //入住人数
-    if(this.data.peopleNum != '不限人数'){
+    if (this.data.peopleNum != '不限人数') {
       var filter = this.data.peopleNum.replace(/[^0-9]/ig, "");
       list["appropriate"] = parseInt(filter);
       wx.setStorageSync("filter_num", 1);
     }
-    else{
+    else {
       list["appropriate"] = 0;
     }
-    if(that.data.place!=''){
+    if (that.data.place != '') {
       list['keywords'] = that.data.place;
     }
     list['city_id'] = that.data.cityInfo.city_id;
@@ -148,12 +148,12 @@ Page({
     });
   },
   //获取定位城市信息
-  getPlace(){
+  getPlace() {
     var that = this;
     wx.getLocation({
       success: function (res) {
         var l = res.latitude + ',' + res.longitude;
-        wxb.Post(wxb.api.getLocation, { location: l} ,function(data){
+        wxb.Post(wxb.api.getLocation, { location: l }, function (data) {
           that.setData({
             cityInfo: {
               city_id: data.result.cityCode,
@@ -169,7 +169,7 @@ Page({
 
   },
   // 获取定位具体位置
-  getLocation: function(){
+  getLocation: function () {
     var that = this;
     that.setData({
       isHide: false
@@ -186,7 +186,7 @@ Page({
         isHide: true,
         place: data.originalData.result.formatted_address
       })
-      
+
     }
     // 发起regeocoding检索请求 
     BMap.regeocoding({
@@ -195,7 +195,7 @@ Page({
     });
   },
   //点击城市跳转到选择城市页面
-  navigatorToCity(){
+  navigatorToCity() {
     var that = this
     var city = that.data.cityInfo.city_name
     wx.navigateTo({
@@ -203,7 +203,7 @@ Page({
     })
   },
   //获取个人信息授权
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -215,13 +215,13 @@ Page({
   get_bgImg: function () {
     var that = this;
     wxb.Post(wxb.api.getConfig, {}, function (data) {
-      if(data.banner){
+      if (data.banner) {
         that.setData({
           src: data.banner[0],
           bannerList: data.banner,
           recommendList: data.marke
         });
-        if(data.app_name){
+        if (data.app_name) {
           wx.setNavigationBarTitle({
             title: data.app_name,
           });
@@ -247,16 +247,16 @@ Page({
     }
   },
   // 推荐图片点击跳转
-  navigatorToPhoto: function(e){
+  navigatorToPhoto: function (e) {
     var path = e.currentTarget.dataset.path;
-    if(path != ''){
+    if (path != '') {
       wx.navigateTo({
         url: path,
       });
     }
   },
   // 首页活动跳转
-  toActivity: function(){
+  toActivity: function () {
     wx.showModal({
       title: '提示',
       content: '活动尚未开始，敬请期待！',

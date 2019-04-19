@@ -16,7 +16,7 @@
         <text class='font-middle color-org'>授权手机号登录</text>
       </button>
     </view>
-    <view class='accLogin-bottom font-small color-193'>*未注册的手机号将自动创建为稻客民宿用户*</view>
+    <view class='accLogin-bottom font-small color-193'>*未注册的手机号将自动创建为葙风民宿用户*</view>
   </view>
   <!-- 验证码登录 -->
   <view class='codeLogin font-middle' wx:else>
@@ -25,7 +25,7 @@
     </view>
     <view class='codeLogin-view codeLogin-code'>
       <input bindinput='getValatedCode' placeholder='请输入图形验证码' placeholder-class='font-middle'></input>
-      <view class='codeLogin-code-image'><image src='{{imgUrl}}&v={{sjn}}' bindtap='getImg'></image></view>
+      <view class='codeLogin-code-image'><image src='http://localhost:9000/user/getCaptcha?tokenId={{ sjn }}' cbindtap='getImg'></image></view>
     </view>
     <view class='codeLogin-view codeLogin-code'>
       <input type="number" bindinput='getCodeNum' placeholder='请输入验证码' placeholder-class='font-middle' maxlength="6"></input>

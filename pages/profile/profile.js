@@ -8,8 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isLogin: false,
-    
+    isLogin: true,
   },
   //进入登录界面
   toLogin: function(){
@@ -117,6 +116,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log(wx.getStorageSync('userinfo'));
     var isLogin = false;
     if(wxb.checkAuthLogin()){
       this.setData({
