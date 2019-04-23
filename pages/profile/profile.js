@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isLogin: true,
+    isLogin: false,
   },
   //进入登录界面
   toLogin: function(){

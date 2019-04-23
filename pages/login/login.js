@@ -230,9 +230,38 @@ Page({
         console.log("code" + res.code)
         if (res.code) {
           wxb.Post(wxb.api.wxAuth, {
-            jsCode: res.code
+            jsCode: res.code  
           }, function (data) {
-            console.log(data);
+
+            if(data.data.code == -100){
+              Toast({
+                message: data.data.msg,
+                selector: '#zan-toast-test'
+              });
+            }
+
+            if(data.data.code == 200){
+              // 查看是否授权
+              wx.getSetting({
+                success: function (res) {
+                  if (res.authSetting['scope.userInfo']) {
+                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                    wx.getUserInfo({
+                      success: function (res) {
+                        wxb.Post(wxb.api.resolveEncryptedData, {
+                          ecncryptedData: res.encryptedData,
+                          ivb64: res.iv
+                        }, function (res) {
+                          wx.setStorageSync("userinfo", JSON.stringify(res));
+                          wx.setStorageSync("isOrder", true);
+                          wx.navigateBack();
+                        })
+                      }
+                    })
+                  }
+                }
+              })
+            }
           }); 
         } else {
           console.log('登录失败！' + res.errMsg)
@@ -240,26 +269,7 @@ Page({
       }
     });
 
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res)
-              wxb.Post(wxb.api.resolveEncryptedData,{
-                ecncryptedData: res.encryptedData,
-                ivb64: res.iv
-              },function(res){
-                console.log(res);
-              })
-              wx.navigateBack();
-            }
-          })
-        }
-      }
-    })
+    
 
     // wxb.login(function(res){
     //   console.log(res)

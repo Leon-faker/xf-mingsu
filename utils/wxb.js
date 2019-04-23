@@ -38,19 +38,8 @@ function checkManage() {
 //检查是否授权登陆了  不使用微信的 checksession来判断 type 等于true 的时候代表需要 SETDATA
 function checkAuthLogin(type) {
   var info = wx.getStorageSync('userinfo');
-  var userinfo = info ? JSON.parse(info) : {};
-  if (!userinfo.open_id) return false;
-  var time = Date.parse(new Date());
-  //console.log(time / 1000 - userinfo.last_time );
-  if (time / 1000 - userinfo.last_time > 86400) {
-    return false;//大于一天了
-  }
-  if (type == true) {
-    module.exports.that.setData({
-      userinfo: userinfo
-    });
-  }
-  return true;
+  if(info) return true 
+  else return false;
 }
 //检查是否手机号登陆
 function checkLogin() {
@@ -231,7 +220,7 @@ function PostMain(api, params, callback, types) {
         case 101:
           break;
         case 200:
-          callback(data.data.data);
+          callback(data);
           break
         default:
           Toast({
